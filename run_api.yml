@@ -1,0 +1,22 @@
+name: Fetch NASA APOD and Upload Artifact
+
+on:
+  workflow_dispatch:  # Manual trigger
+
+jobs:
+  fetch-apod:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Fetch NASA APOD
+      run: |
+        curl "https://api.nasa.gov/planetary/apod?api_key=${{ secrets.API_KEY }}" -o apod.json
+
+    - name: Upload APOD JSON as artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: nasa-apod
+        path: apod.json
