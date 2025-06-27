@@ -15,6 +15,11 @@ jobs:
       run: |
         curl "https://api.nasa.gov/planetary/apod?api_key=${{ secrets.API_KEY }}" -o apod.json
 
+    - name: Output explanation field
+      run: |
+        echo "Explanation:"
+        jq -r '.explanation' apod.json
+
     - name: Upload APOD JSON as artifact
       uses: actions/upload-artifact@v4
       with:
